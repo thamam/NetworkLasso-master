@@ -5,7 +5,7 @@ import numpy as np
 from numpy import linalg as LA
 import math
 from multiprocessing import Pool
-                                
+
 
 #Plotting
 import csv
@@ -106,7 +106,7 @@ def runADMM(G1, sizeOptVar, sizeData, lamb, rho, numiters, x, u, z, a, edgeWeigh
 
     #Run ADMM
     iters = 0
-    maxProcesses =  1 #80
+    maxProcesses =  4 #80
     pool = Pool(processes = min(max(nodes, edges), maxProcesses))
     #pool = Pool(processes = 1)
 
@@ -227,22 +227,15 @@ def runADMM(G1, sizeOptVar, sizeData, lamb, rho, numiters, x, u, z, a, edgeWeigh
     else:
         return (bestx,bestu,bestz,0,0)
 
-
-
-
-
-
-
-
 def main():
 
     #Set parameters
     useConvex = 1
     rho = 0.001
     numiters = 50
-    thresh = 0.15 # 1000#10000 TH
-    lamb = 0.0
-    startVal = 0.1#0.01
+    lamb = 1000
+    thresh = lamb *1.01 # 11# 201 #0.15 # 1000#10000 TH
+    startVal = 0.1 #0.01
     useMult = 1 #1 for mult, 0 for add
     addUpdateVal = 0.1
     multUpdateVal = 1.25#1.1
@@ -333,7 +326,7 @@ def main():
     print(nodes, edges)
     print(GetBfsFullDiam(G1, 1000, False))
 
-    # SaveEdgeList(G1, 'mygraph.txt')
+    SaveEdgeList(G1, 'mygraph.txt')
     # sys.exit()
 
     #Get side information
@@ -466,11 +459,13 @@ def main():
         f.write('\"' + newval + '\",')
     f.close()
 
+    # THH changed writing format into Table
     f = open('latlong.txt', 'w')
+    f.write('Lat , Long \n ')
     for NI in G1.Nodes():
         lat = locations.GetDat(NI.GetId()).GetVal1()
         lon = locations.GetDat(NI.GetId()).GetVal2()
-        f.write('new GLatLng(' + str(lat) + ',' + str(lon) + '),' )
+        f.write(str(lat) + ',' + str(lon) + '\n')
     f.close()
 
 
