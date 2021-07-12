@@ -56,7 +56,7 @@ def solveZ(data):
 
 def solveU(data):
 	leng = data.size-1
-	u = data[0:leng//3]
+	u = data[0:(leng//3)]
 	x = data[leng//3:2*leng//3]
 	z = data[(2*leng//3):leng]
 	rho = data[data.size-1]
