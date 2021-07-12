@@ -25,7 +25,7 @@ def solveX(data):
 	x = data[0:inputs]
 	a = data[inputs:(inputs + sizeData)]
 	neighs = data[(inputs + sizeData):data.size-4]
-	xnew = Variable(inputs,1)
+	xnew = Variable((inputs,1))
 
 	mu = data[data.size-5]
 
